@@ -1,0 +1,29 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: nexo-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/nexo_db
+    username: nexo_user
+    password: nexo_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      #      ddl-auto: update # tables are created if they don't exist, and existing tables are updated if there are changes in the @Entity classes. (Recommended for development)
+      ddl-auto: create # tables are recreated from scratch on every application startup. (Convenient for testing authentication)
+
+application:
+  security:
+    jwt:
+    # really secret key :)))
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000

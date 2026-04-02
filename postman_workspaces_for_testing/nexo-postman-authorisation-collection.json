@@ -1,0 +1,193 @@
+{
+  "info": {
+    "name": "Nexo Auth Flows",
+    "description": "Postman collection for testing the complete auth flow: Admin Registration, Login, Sending Invitation, Registration via Invitation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Admin Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/register-admin",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "register-admin"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizationName\": \"IT Group\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Admin Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.token) {",
+              "    pm.collectionVariables.set(\"adminToken\", jsonData.token);",
+              "    console.log(\"Saved adminToken to collection variables!\");",
+              "} else {",
+              "    console.log(\"Token not found in response!\");",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Create Invitation (As Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.invitationToken) {",
+              "    pm.collectionVariables.set(\"invitationToken\", jsonData.invitationToken);",
+              "    console.log(\"Saved invitation token to collection variables!\");",
+              "} else {",
+              "    console.log(\"Invitation token not found in response!\");",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/invitations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "invitations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"new.employee@example.com\"\n}"
+        }
+      }
+    },
+    {
+      "name": "4. Invited User Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/register-invited",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "register-invited"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"invitationToken\": \"{{invitationToken}}\",\n  \"firstName\": \"Anna\",\n  \"lastName\": \"Smith\",\n  \"password\": \"newpassword1\"\n}"
+        }
+      }
+    },
+    {
+      "name": "5. New User Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"new.employee@example.com\",\n  \"password\": \"newpassword1\"\n}"
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invitationToken",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
