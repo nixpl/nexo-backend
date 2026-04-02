@@ -3,7 +3,7 @@
 "Nexo" system - backend part (Spring Boot 3 + Java + PostgreSQL).
 
 ## Requirements
-* Java 17+ (or 21+, depending on project configuration)
+* Java 25
 * Docker and Docker Compose (to run the database)
 * Maven (the `mvnw` wrapper is available in the project)
 
