@@ -15,7 +15,7 @@ public enum ErrorInfo {
     INVALID_CREDENTIALS(1002, HttpStatus.UNAUTHORIZED, "Invalid credentials"),
     USER_HAS_UNAUTHORIZED_ROLE(1003, HttpStatus.FORBIDDEN, "User does not have the required role"),
     EMAIL_ALREADY_EXISTS(1004, HttpStatus.CONFLICT, "User with this email already exists"),
-    INVALID_TOKEN(1005, HttpStatus.UNAUTHORIZED, "Invalid or expired invitationToken"),
+    INVALID_INVENTATION_TOKEN(1005, HttpStatus.UNAUTHORIZED, "Invalid or expired invitationToken"),
 
     // ------------------------------------------
     // 2000 - 2999: Tasks (Task)

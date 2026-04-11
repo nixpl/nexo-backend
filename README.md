@@ -7,6 +7,40 @@
 * Docker and Docker Compose (to run the database)
 * Maven (the `mvnw` wrapper is available in the project)
 
+## Environment Variables
+
+To enable the feature of sending email invitations to new users, you need to set up the following environment variables before running the application. These will provide the credentials for the SMTP mail server:
+
+* `MAIL_USERNAME` - The email address from which invitations will be sent (e.g., `your_email@gmail.com`).
+* `MAIL_PASSWORD` - The password for the email account (if using a Gmail account, you must generate and use a 16-character **App Password**).
+
+*Optional variables (already configured for Gmail by default):*
+* `MAIL_HOST` (default: `smtp.gmail.com`)
+* `MAIL_PORT` (default: `587`)
+
+> **Note:** Without setting `MAIL_USERNAME` and `MAIL_PASSWORD`, the application will fail to send invitation emails.
+
+## Database Structure
+
+The system uses a relational database model conceptually based on Jira's structure. Here are the core entities and their relationships (unidirectional mostly for performance):
+
+*   **User**: Core identity.
+    *   *Relationships*: Belongs to one `Organization` (Many-to-One).
+*   **Organization**: Represents a company or workspace.
+    *   *Fields*: `name`, `createdAt`.
+*   **Board**: A project/board within an organization.
+    *   *Relationships*: Belongs to an `Organization` (Many-to-One). Has assigned `Users` (Many-to-Many). Contains `Stages` (One-to-Many).
+*   **Stage**: Represents columns on a board (e.g., *To-Do*, *In Progress*).
+    *   *Relationships*: Belongs to a `Board` (Many-to-One). Has a specific `StageType` enum.
+*   **Issue**: Represents a task, bug, story, or epic.
+    *   *Relationships*: 
+        *   Belongs to an `Organization`, `Board`, and `Stage` (Many-to-One).
+        *   Assigned to an `assignee` (`User`) and reported by a `reporter` (`User`).
+        *   Linked to a parent Epic (`epic_id` -> Many-to-One self-reference).
+*   **Comment**: Discussion entries on issues.
+    *   *Relationships*: Belongs to an `Issue` (Many-to-One) and written by an `author` (`User`).
+*   **Invitation**: Used for inviting new users to an Organization.
+
 ## Running the project
 
 1. **Running the database (PostgreSQL)**

@@ -11,9 +11,4 @@ public class AppException extends RuntimeException {
         super(errorInfo.getDefaultMessage());
         this.errorInfo = errorInfo;
     }
-
-    public AppException(ErrorInfo errorInfo, String customMessage) {
-        super(customMessage);
-        this.errorInfo = errorInfo;
-    }
 }

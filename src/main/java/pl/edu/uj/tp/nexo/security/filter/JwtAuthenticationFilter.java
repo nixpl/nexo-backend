@@ -71,7 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            exceptionResolver.resolveException(request, response, null, new AppException(ErrorInfo.INVALID_TOKEN, "Invalid or expired JWT invitationToken"));
+            exceptionResolver.resolveException(request, response, null, new AppException(ErrorInfo.INVALID_INVENTATION_TOKEN));
             return;
         }
 

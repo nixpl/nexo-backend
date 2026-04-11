@@ -6,6 +6,18 @@ spring:
   application:
     name: nexo-backend
 
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:fill_in_environment_variables}
+    password: ${MAIL_PASSWORD:fill_in_environment_variables}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   datasource:
     url: jdbc:postgresql://localhost:5433/nexo_db
     username: nexo_user
@@ -22,6 +34,8 @@ spring:
       ddl-auto: create # tables are recreated from scratch on every application startup. (Convenient for testing authentication)
 
 application:
+# TODO: Change the registration link to the correct frontend URL
+  frontend-inventation-url: http://localhost:8080
   security:
     jwt:
     # really secret key :)))

@@ -82,12 +82,8 @@
           "script": {
             "exec": [
               "var jsonData = pm.response.json();",
-              "if (jsonData.invitationToken) {",
-              "    pm.collectionVariables.set(\"invitationToken\", jsonData.invitationToken);",
-              "    console.log(\"Saved invitation token to collection variables!\");",
-              "} else {",
-              "    console.log(\"Invitation token not found in response!\");",
-              "}"
+              "console.log(\"Response message: \" + jsonData.message);",
+              "console.log(\"IMPORTANT: The invitationToken is NO LONGER in the response. Check the sent email (or your Mailtrap/SMTP logs) to copy the token, and paste it manually into the 'invitationToken' variable in your Postman Collection.\");"
             ],
             "type": "text/javascript"
           }
