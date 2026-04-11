@@ -19,6 +19,8 @@ import pl.edu.uj.tp.nexo.exception.dto.ErrorResponse;
 import pl.edu.uj.tp.nexo.invitation.dto.InvitationRequest;
 import pl.edu.uj.tp.nexo.invitation.dto.InvitationResponse;
 import pl.edu.uj.tp.nexo.invitation.service.InvitationService;
+import pl.edu.uj.tp.nexo.user.entity.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/invitations")
@@ -39,7 +41,7 @@ public class InvitationController {
             @ApiResponse(responseCode = "200", description = "Invitation created successfully",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = InvitationResponse.class)))
     })
-    public ResponseEntity<InvitationResponse> createInvitation(@RequestBody InvitationRequest request) {
-        return ResponseEntity.ok(invitationService.createInvitation(request));
+    public ResponseEntity<InvitationResponse> createInvitation(@RequestBody InvitationRequest request, @AuthenticationPrincipal User admin) {
+        return ResponseEntity.ok(invitationService.createInvitation(request, admin.getOrganization().getId()));
     }
 }

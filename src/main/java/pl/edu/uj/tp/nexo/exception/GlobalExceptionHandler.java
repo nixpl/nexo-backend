@@ -2,6 +2,8 @@ package pl.edu.uj.tp.nexo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.edu.uj.tp.nexo.exception.dto.ErrorResponse;
@@ -20,6 +22,32 @@ public class GlobalExceptionHandler {
                 errorInfo.getStatus().getReasonPhrase(),
                 errorInfo.getCode(),
                 ex.getMessage()
+        );
+        return new ResponseEntity<>(error, errorInfo.getStatus());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
+        ErrorInfo errorInfo = ErrorInfo.USER_HAS_UNAUTHORIZED_ROLE;
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                errorInfo.getStatus().value(),
+                errorInfo.getStatus().getReasonPhrase(),
+                errorInfo.getCode(),
+                errorInfo.getDefaultMessage()
+        );
+        return new ResponseEntity<>(error, errorInfo.getStatus());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
+        ErrorInfo errorInfo = ErrorInfo.INVALID_CREDENTIALS;
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                errorInfo.getStatus().value(),
+                errorInfo.getStatus().getReasonPhrase(),
+                errorInfo.getCode(),
+                errorInfo.getDefaultMessage()
         );
         return new ResponseEntity<>(error, errorInfo.getStatus());
     }

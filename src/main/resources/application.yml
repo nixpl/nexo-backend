@@ -18,7 +18,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      #      ddl-auto: update # tables are created if they don't exist, and existing tables are updated if there are changes in the @Entity classes. (Recommended for development)
+#      ddl-auto: update # tables are created if they don't exist, and existing tables are updated if there are changes in the @Entity classes. (Recommended for development)
       ddl-auto: create # tables are recreated from scratch on every application startup. (Convenient for testing authentication)
 
 application:
