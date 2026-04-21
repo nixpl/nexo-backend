@@ -18,8 +18,11 @@ public enum ErrorInfo {
     INVALID_INVENTATION_TOKEN(1005, HttpStatus.UNAUTHORIZED, "Invalid or expired invitationToken"),
 
     // ------------------------------------------
-    // 2000 - 2999: Tasks (Task)
+    // 2000 - 2999: Issues, Boards, Stages
     // ------------------------------------------
+    ISSUE_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "Issue not found"),
+    BOARD_NOT_FOUND(2002, HttpStatus.NOT_FOUND, "Board not found"),
+    STAGE_NOT_FOUND(2003, HttpStatus.NOT_FOUND, "Stage not found"),
 
     // ------------------------------------------
     // 3000 - 3999: General errors, Validation, Others
@@ -33,8 +36,6 @@ public enum ErrorInfo {
     INVALID_EMAIL(3006, HttpStatus.BAD_REQUEST, "Invalid email format. Email cannot be blank and must contain @ symbol"),
     INVALID_PASSWORD(3007, HttpStatus.BAD_REQUEST, "Password must be at least 6 characters long and cannot be blank"),
     INVALID_ORGANIZATION_NAME(3008, HttpStatus.BAD_REQUEST, "Organization name cannot be blank"),
-
-    // *** Add more error codes as needed, following the same pattern:
 
     // ------------------------------------------
     // 9000 - 9999: System and Critical errors
