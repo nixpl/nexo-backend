@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import pl.edu.uj.tp.nexo.exception.annotation.ApiErrors;
 import pl.edu.uj.tp.nexo.exception.ErrorInfo;
-import pl.edu.uj.tp.nexo.exception.dto.ErrorResponse;
 import pl.edu.uj.tp.nexo.invitation.dto.InvitationRequest;
 import pl.edu.uj.tp.nexo.invitation.dto.InvitationResponse;
 import pl.edu.uj.tp.nexo.invitation.service.InvitationService;
@@ -35,6 +34,7 @@ public class InvitationController {
     @Operation(summary = "Create an invitation", description = "Generates a unique invitation invitationToken for a provided email address. (Requires ADMIN role)")
     @ApiErrors({
             ErrorInfo.USER_HAS_UNAUTHORIZED_ROLE,
+            ErrorInfo.INVALID_AUTH_TOKEN,
             ErrorInfo.INVALID_EMAIL
     })
     @ApiResponses(value = {

@@ -1,16 +1,16 @@
 services:
   postgres:
-    image: postgres:16-alpine # Lekka wersja najnowszego stabilnego Postgresa
+    image: postgres:16-alpine
     container_name: nexo-postgres
     network_mode: bridge
     ports:
-      - "5433:5432" # Mapowanie portu: zewnetrzny(Twój komputer) : wewnetrzny(wewnatrz Dockera)
+      - "5433:5432"
     environment:
       POSTGRES_DB: nexo_db
       POSTGRES_USER: nexo_user
       POSTGRES_PASSWORD: nexo_password
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Dzięki temu dane nie znikną po restarcie Dockera
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
