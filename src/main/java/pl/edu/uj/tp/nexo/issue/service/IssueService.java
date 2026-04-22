@@ -20,7 +20,9 @@ import pl.edu.uj.tp.nexo.organization.service.OrganizationNotFoundException;
 import pl.edu.uj.tp.nexo.user.repository.UserRepository;
 import pl.edu.uj.tp.nexo.user.service.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.criteria.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,31 +35,36 @@ public class IssueService {
     private final StageRepository stageRepository;
     private final OrganizationRepository organizationRepository;
 
+    @Transactional(readOnly = true)
     public List<IssueResponse> searchIssues(Long organizationId, Long boardId, Long stageId, Long assigneeId, String search) {
-        Specification<Issue> spec = Specification.where((Specification<Issue>) null);
+        Specification<Issue> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
 
-        if (organizationId != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("organization").get("id"), organizationId));
-        }
-        if (boardId != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("board").get("id"), boardId));
-        }
-        if (stageId != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("stage").get("id"), stageId));
-        }
-        if (assigneeId != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("assignee").get("id"), assigneeId));
-        }
-        if (search != null && !search.isBlank()) {
-            spec = spec.and((root, query, cb) -> cb.or(
-                    cb.like(cb.lower(root.get("title")), "%" + search.toLowerCase() + "%"),
-                    cb.like(cb.lower(root.get("description")), "%" + search.toLowerCase() + "%")
-            ));
-        }
+            if (organizationId != null) {
+                predicates.add(cb.equal(root.get("organization").get("id"), organizationId));
+            }
+            if (boardId != null) {
+                predicates.add(cb.equal(root.get("board").get("id"), boardId));
+            }
+            if (stageId != null) {
+                predicates.add(cb.equal(root.get("stage").get("id"), stageId));
+            }
+            if (assigneeId != null) {
+                predicates.add(cb.equal(root.get("assignee").get("id"), assigneeId));
+            }
+            if (search != null && !search.trim().isEmpty()) {
+                // Searches for the text anywhere in the title, ignoring upper/lower case
+                predicates.add(cb.like(cb.lower(root.get("title")), "%" + search.toLowerCase() + "%"));
+            }
 
+            // Combine all predicates with an AND statement
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        // Fetch using the specification and map to your response DTO
         return issueRepository.findAll(spec).stream()
-                .map(this::toIssueResponse)
-                .collect(Collectors.toList());
+                .map(this::toIssueResponse) // Make sure this matches your actual mapper method name!
+                .toList();
     }
 
     public List<IssueResponse> getIssues() {

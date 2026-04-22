@@ -24,11 +24,12 @@
 							"raw": "{\n  \"organizationName\": \"IT Group\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/register-admin",
+							"raw": "{{baseUrl}}/api/auth/register-admin",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"auth",
 								"register-admin"
 							]
@@ -68,11 +69,12 @@
 							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/login",
+							"raw": "{{baseUrl}}/api/auth/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"auth",
 								"login"
 							]
@@ -95,11 +97,12 @@
 							"raw": "{\n  \"invitationToken\": \"{{invitationToken}}\",\n  \"firstName\": \"Anna\",\n  \"lastName\": \"Smith\",\n  \"password\": \"newpassword1\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/register-invited",
+							"raw": "{{baseUrl}}/api/auth/register-invited",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"auth",
 								"register-invited"
 							]
@@ -144,11 +147,12 @@
 							"raw": "{\n  \"email\": \"new.employee@example.com\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/invitations",
+							"raw": "{{baseUrl}}/api/invitations",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"invitations"
 							]
 						}
@@ -196,11 +200,12 @@
 							"raw": "{\n  \"email\": \"test.user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users",
+							"raw": "{{baseUrl}}/api/users",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users"
 							]
 						}
@@ -218,11 +223,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users",
+							"raw": "{{baseUrl}}/api/users",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users"
 							]
 						}
@@ -240,11 +246,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users?organizationId={{organizationId}}",
+							"raw": "{{baseUrl}}/api/users?organizationId={{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users"
 							],
 							"query": [
@@ -268,11 +275,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users/{{userId}}",
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users",
 								"{{userId}}"
 							]
@@ -299,11 +307,12 @@
 							"raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"User\",\n  \"password\": \"newpassword123\",\n  \"role\": \"USER\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/{{userId}}",
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users",
 								"{{userId}}"
 							]
@@ -322,11 +331,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/users/{{userId}}",
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"users",
 								"{{userId}}"
 							]
@@ -375,11 +385,12 @@
 							"raw": "{\n  \"title\": \"Implement login page\",\n  \"description\": \"Create a responsive login page using React.\",\n  \"acceptanceCriteria\": \"User can login with email and password.\",\n  \"reporterId\": 1,\n  \"assigneeId\": 1,\n  \"storyPoints\": 5,\n  \"priority\": \"HIGH\",\n  \"type\": \"TASK\",\n  \"startDate\": \"2023-10-26T10:00:00\",\n  \"deadline\": \"2023-11-02T18:00:00\",\n  \"boardId\": 1,\n  \"stageId\": 1,\n  \"organizationId\": 1\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/issues",
+							"raw": "{{baseUrl}}/api/issues",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues"
 							]
 						}
@@ -397,11 +408,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/issues?organizationId={{organizationId}}&boardId={{boardId}}&stageId={{stageId}}&assigneeId={{userId}}&search=login",
+							"raw": "{{baseUrl}}/api/issues?organizationId={{organizationId}}&boardId={{boardId}}&stageId={{stageId}}&assigneeId={{userId}}&search=login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues"
 							],
 							"query": [
@@ -441,11 +453,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/issues?organizationId={{organizationId}}",
+							"raw": "{{baseUrl}}/api/issues?organizationId={{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues"
 							],
 							"query": [
@@ -469,11 +482,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/issues/{{issueId}}",
+							"raw": "{{baseUrl}}/api/issues/{{issueId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues",
 								"{{issueId}}"
 							]
@@ -500,11 +514,12 @@
 							"raw": "{\n  \"title\": \"Implement login page updated\",\n  \"description\": \"Updated description\",\n  \"storyPoints\": 8,\n  \"priority\": \"HIGHEST\",\n  \"flag\": true,\n  \"type\": \"STORY\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/issues/{{issueId}}",
+							"raw": "{{baseUrl}}/api/issues/{{issueId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues",
 								"{{issueId}}"
 							]
@@ -523,11 +538,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/issues/{{issueId}}",
+							"raw": "{{baseUrl}}/api/issues/{{issueId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"issues",
 								"{{issueId}}"
 							]
@@ -576,11 +592,12 @@
 							"raw": "{\n  \"name\": \"New Organization\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/organizations",
+							"raw": "{{baseUrl}}/api/organizations",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"organizations"
 							]
 						}
@@ -598,11 +615,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/organizations",
+							"raw": "{{baseUrl}}/api/organizations",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"organizations"
 							]
 						}
@@ -620,11 +638,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/organizations/{{organizationId}}",
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"organizations",
 								"{{organizationId}}"
 							]
@@ -651,11 +670,12 @@
 							"raw": "{\n  \"name\": \"Updated Organization Name\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/organizations/{{organizationId}}",
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"organizations",
 								"{{organizationId}}"
 							]
@@ -674,11 +694,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/organizations/{{organizationId}}",
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"organizations",
 								"{{organizationId}}"
 							]
@@ -856,7 +877,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:8080/api",
+			"value": "http://localhost:8080",
 			"type": "string"
 		},
 		{

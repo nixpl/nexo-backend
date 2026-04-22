@@ -2,6 +2,7 @@ package pl.edu.uj.tp.nexo.issue.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import pl.edu.uj.tp.nexo.board.entity.Board;
 import pl.edu.uj.tp.nexo.board.entity.Stage;
 import pl.edu.uj.tp.nexo.user.entity.User;
@@ -45,6 +46,7 @@ public class Issue {
     @Column(nullable = false)
     private Priority priority;
 
+    @Builder.Default
     private boolean flag = false;
 
     @Enumerated(EnumType.STRING)
@@ -55,8 +57,9 @@ public class Issue {
     @JoinColumn(name = "epic_id")
     private Issue epic;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     private LocalDateTime startDate;
 

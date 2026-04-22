@@ -2,10 +2,12 @@ package pl.edu.uj.tp.nexo.board.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import pl.edu.uj.tp.nexo.organization.entity.Organization;
 import pl.edu.uj.tp.nexo.user.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,15 +32,18 @@ public class Board {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "board_users",
-        joinColumns = @JoinColumn(name = "board_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "board_users",
+            joinColumns = @JoinColumn(name = "board_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<User> users;
+    @Builder.Default
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Stage> stages;
+    @Builder.Default
+    private List<Stage> stages = new ArrayList<>();
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
