@@ -1,9 +1,10 @@
 package pl.edu.uj.tp.nexo.issue.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.uj.tp.nexo.issue.dto.CreateIssueRequest;
 import pl.edu.uj.tp.nexo.issue.dto.IssueResponse;
 import pl.edu.uj.tp.nexo.issue.dto.UpdateIssueRequest;
@@ -20,11 +21,15 @@ public class IssueController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public List<IssueResponse> getIssues(@RequestParam(required = false) Long organizationId) {
-        if (organizationId != null) {
-            return issueService.getIssuesByOrganization(organizationId);
-        }
-        return issueService.getIssues();
+    @Operation(summary = "Search and filter issues")
+    public List<IssueResponse> getIssues(
+            @RequestParam(required = false) Long organizationId,
+            @RequestParam(required = false) Long boardId,
+            @RequestParam(required = false) Long stageId,
+            @RequestParam(required = false) Long assigneeId,
+            @RequestParam(required = false) String search
+    ) {
+        return issueService.searchIssues(organizationId, boardId, stageId, assigneeId, search);
     }
 
     @GetMapping("/{id}")

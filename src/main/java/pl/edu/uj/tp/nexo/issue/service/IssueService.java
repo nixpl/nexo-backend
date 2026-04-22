@@ -1,7 +1,11 @@
 package pl.edu.uj.tp.nexo.issue.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.edu.uj.tp.nexo.board.entity.Stage;
+import pl.edu.uj.tp.nexo.board.entity.StageType;
 import pl.edu.uj.tp.nexo.board.repository.BoardRepository;
 import pl.edu.uj.tp.nexo.board.repository.StageRepository;
 import pl.edu.uj.tp.nexo.board.service.BoardNotFoundException;
@@ -28,6 +32,33 @@ public class IssueService {
     private final BoardRepository boardRepository;
     private final StageRepository stageRepository;
     private final OrganizationRepository organizationRepository;
+
+    public List<IssueResponse> searchIssues(Long organizationId, Long boardId, Long stageId, Long assigneeId, String search) {
+        Specification<Issue> spec = Specification.where((Specification<Issue>) null);
+
+        if (organizationId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("organization").get("id"), organizationId));
+        }
+        if (boardId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("board").get("id"), boardId));
+        }
+        if (stageId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("stage").get("id"), stageId));
+        }
+        if (assigneeId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("assignee").get("id"), assigneeId));
+        }
+        if (search != null && !search.isBlank()) {
+            spec = spec.and((root, query, cb) -> cb.or(
+                    cb.like(cb.lower(root.get("title")), "%" + search.toLowerCase() + "%"),
+                    cb.like(cb.lower(root.get("description")), "%" + search.toLowerCase() + "%")
+            ));
+        }
+
+        return issueRepository.findAll(spec).stream()
+                .map(this::toIssueResponse)
+                .collect(Collectors.toList());
+    }
 
     public List<IssueResponse> getIssues() {
         return issueRepository.findAll().stream()
@@ -57,6 +88,8 @@ public class IssueService {
         var stage = stageRepository.findById(request.getStageId()).orElseThrow(() -> new StageNotFoundException(request.getStageId()));
         var organization = organizationRepository.findById(request.getOrganizationId()).orElseThrow(() -> new OrganizationNotFoundException(request.getOrganizationId()));
         var epic = request.getEpicId() != null ? issueRepository.findById(request.getEpicId()).orElseThrow(() -> new IssueNotFoundException(request.getEpicId())) : null;
+
+        validateEpicStage(request.getType(), stage);
 
         Issue issue = Issue.builder()
                 .title(request.getTitle())
@@ -123,6 +156,7 @@ public class IssueService {
         if (request.getStageId() != null) {
             var stage = stageRepository.findById(request.getStageId())
                     .orElseThrow(() -> new StageNotFoundException(request.getStageId()));
+            validateEpicStage(issue.getType(), stage);
             issue.setStage(stage);
         }
 
@@ -135,6 +169,15 @@ public class IssueService {
             throw new IssueNotFoundException(id);
         }
         issueRepository.deleteById(id);
+    }
+
+    private void validateEpicStage(pl.edu.uj.tp.nexo.issue.entity.IssueType type, Stage stage) {
+        if (type == pl.edu.uj.tp.nexo.issue.entity.IssueType.EPIC) {
+            List<StageType> allowed = List.of(StageType.PREPARATION, StageType.TO_DO, StageType.IN_PROGRESS, StageType.DONE);
+            if (!allowed.contains(stage.getType())) {
+                throw new IllegalArgumentException("Epics can only be assigned to: " + allowed);
+            }
+        }
     }
 
     private IssueResponse toIssueResponse(Issue issue) {

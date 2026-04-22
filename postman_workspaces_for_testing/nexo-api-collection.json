@@ -397,12 +397,34 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/issues",
+							"raw": "{{baseUrl}}/issues?organizationId={{organizationId}}&boardId={{boardId}}&stageId={{stageId}}&assigneeId={{userId}}&search=login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"issues"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{organizationId}}"
+								},
+								{
+									"key": "boardId",
+									"value": "{{boardId}}"
+								},
+								{
+									"key": "stageId",
+									"value": "{{stageId}}"
+								},
+								{
+									"key": "assigneeId",
+									"value": "{{userId}}"
+								},
+								{
+									"key": "search",
+									"value": "login"
+								}
 							]
 						}
 					},
@@ -665,6 +687,170 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Boards",
+			"item": [
+				{
+					"name": "Create Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.collectionVariables.set(\"boardId\", jsonData.id);",
+									"    if (jsonData.stages && jsonData.stages.length > 0) {",
+									"        pm.collectionVariables.set(\"stageId\", jsonData.stages[0].id);",
+									"    }",
+									"    console.log(\"Saved boardId and first stageId to collection variables!\");",
+									"} else {",
+									"    console.log(\"Board ID not found in response!\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Development Board\",\n  \"organizationId\": {{organizationId}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/boards",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"boards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Boards by Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/boards?organizationId={{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"boards"
+							],
+							"query": [
+								{
+									"key": "organizationId",
+									"value": "{{organizationId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Board by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/boards/{{boardId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"boards",
+								"{{boardId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Stage Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isActive\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/boards/{{boardId}}/stages/{{stageId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"boards",
+								"{{boardId}}",
+								"stages",
+								"{{stageId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User to Board",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/boards/{{boardId}}/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"boards",
+								"{{boardId}}",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"variable": [
@@ -695,6 +881,16 @@
 		},
 		{
 			"key": "organizationId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "boardId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "stageId",
 			"value": "",
 			"type": "string"
 		}
