@@ -751,11 +751,12 @@
 							"raw": "{\n  \"name\": \"Development Board\",\n  \"organizationId\": {{organizationId}}\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/boards",
+							"raw": "{{baseUrl}}/api/boards",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"boards"
 							]
 						}
@@ -773,11 +774,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/boards?organizationId={{organizationId}}",
+							"raw": "{{baseUrl}}/api/boards?organizationId={{organizationId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"boards"
 							],
 							"query": [
@@ -801,11 +803,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/boards/{{boardId}}",
+							"raw": "{{baseUrl}}/api/boards/{{boardId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"boards",
 								"{{boardId}}"
 							]
@@ -832,11 +835,12 @@
 							"raw": "{\n  \"isActive\": false\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/boards/{{boardId}}/stages/{{stageId}}",
+							"raw": "{{baseUrl}}/api/boards/{{boardId}}/stages/{{stageId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"boards",
 								"{{boardId}}",
 								"stages",
@@ -857,11 +861,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/boards/{{boardId}}/users/{{userId}}",
+							"raw": "{{baseUrl}}/api/boards/{{boardId}}/users/{{userId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"boards",
 								"{{boardId}}",
 								"users",

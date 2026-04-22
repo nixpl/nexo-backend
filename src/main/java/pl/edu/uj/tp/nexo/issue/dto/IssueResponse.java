@@ -1,13 +1,17 @@
 package pl.edu.uj.tp.nexo.issue.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.edu.uj.tp.nexo.issue.entity.IssueType;
 import pl.edu.uj.tp.nexo.issue.entity.Priority;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class IssueResponse {
     private Long id;

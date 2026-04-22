@@ -1,10 +1,11 @@
 package pl.edu.uj.tp.nexo.user.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import pl.edu.uj.tp.nexo.user.entity.Role;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UpdateUserRequest {
     private String firstName;

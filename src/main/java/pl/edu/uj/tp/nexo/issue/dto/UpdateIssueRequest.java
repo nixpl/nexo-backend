@@ -1,13 +1,14 @@
 package pl.edu.uj.tp.nexo.issue.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import pl.edu.uj.tp.nexo.issue.entity.Priority;
 import pl.edu.uj.tp.nexo.issue.entity.IssueType;
 
 import java.time.LocalDate;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UpdateIssueRequest {
     private String title;
