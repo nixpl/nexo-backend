@@ -42,28 +42,27 @@ The system uses a relational database model conceptually based on Jira's structu
 *   **Invitation**: Used for inviting new users to an Organization.
 
 ## Running the project
-
-1. **Running the database (PostgreSQL)**
-   To run a dedicated PostgreSQL database on port `5433` (configured with appropriate credentials for the application), use the provided `docker-compose.yml` file:
-   ```bash
-   docker-compose up -d
-   ```
-   *(This command will pull the image and run the database in the background).*
-
-2. **Running the application**
-   With the database running, you can start the backend using the built-in Maven wrapper:
-   For Linux / macOS:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-   For Windows:
-   ```cmd
-   mvnw.cmd spring-boot:run
-   ```
-
-   *Optional:* You can also simply run the main `NexoBackendApplication` class directly from your IDE (e.g., IntelliJ IDEA).
-
-> Note: Currently, the application is configured in `application.yml` with `ddl-auto: create`, which means that **every time the database and application are started, the tables are recreated from scratch**. This is useful during the testing and development phase.
+ 
+ To run the entire project (both the PostgreSQL database and the Spring Boot backend) in Docker containers with a single command, use Docker Compose:
+ 
+ ```bash
+ docker compose up --build
+ ```
+ *(This will build the application image and start both the database and backend. Logs will be visible in the console. If you want to run it in the background, add the `-d` flag.)*
+ 
+ Remember to pass the required environment variables if you want email invitations to work, for example:
+ ```bash
+ MAIL_USERNAME=your_email@gmail.com MAIL_PASSWORD=your_app_password docker compose up --build
+ ```
+ 
+ To stop the application:
+ * If running in the foreground (without `-d`), simply press `Ctrl + C` in the terminal.
+ * If running in the background (with `-d`), use the following command:
+ ```bash
+ docker compose down
+ ```
+ 
+ > Note: Currently, the application is configured in `application.yml` with `ddl-auto: create`, which means that **every time the database and application are started, the tables are recreated from scratch**. This is useful during the testing and development phase.
 
 ## API Documentation (Swagger)
 

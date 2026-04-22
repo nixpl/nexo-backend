@@ -2,7 +2,6 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: nexo-postgres
-    network_mode: bridge
     ports:
       - "5433:5432"
     environment:
@@ -11,6 +10,20 @@ services:
       POSTGRES_PASSWORD: nexo_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: nexo-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nexo_db
+      - SPRING_DATASOURCE_USERNAME=nexo_user
+      - SPRING_DATASOURCE_PASSWORD=nexo_password
+      - MAIL_USERNAME=${MAIL_USERNAME:-}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-}
 
 volumes:
   postgres_data:
