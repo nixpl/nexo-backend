@@ -1,5 +1,6 @@
 package pl.edu.uj.tp.nexo.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -42,6 +43,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex) {
         ErrorInfo errorInfo = ErrorInfo.INVALID_CREDENTIALS;
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                errorInfo.getStatus().value(),
+                errorInfo.getStatus().getReasonPhrase(),
+                errorInfo.getCode(),
+                errorInfo.getDefaultMessage()
+        );
+        return new ResponseEntity<>(error, errorInfo.getStatus());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        ErrorInfo errorInfo = ErrorInfo.RESOURCE_IN_USE;
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 errorInfo.getStatus().value(),

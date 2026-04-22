@@ -36,6 +36,7 @@ public enum ErrorInfo {
     INVALID_EMAIL(3006, HttpStatus.BAD_REQUEST, "Invalid email format. Email cannot be blank and must contain @ symbol"),
     INVALID_PASSWORD(3007, HttpStatus.BAD_REQUEST, "Password must be at least 6 characters long and cannot be blank"),
     INVALID_ORGANIZATION_NAME(3008, HttpStatus.BAD_REQUEST, "Organization name cannot be blank"),
+    RESOURCE_IN_USE(3009, HttpStatus.CONFLICT, "Cannot delete or update this resource because it is still in use by other records (e.g., boards or issues)"),
 
     // ------------------------------------------
     // 9000 - 9999: System and Critical errors
