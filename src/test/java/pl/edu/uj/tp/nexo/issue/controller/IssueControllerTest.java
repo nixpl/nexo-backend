@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -13,7 +14,7 @@ import pl.edu.uj.tp.nexo.issue.dto.UpdateIssueRequest;
 import pl.edu.uj.tp.nexo.issue.entity.IssueType;
 import pl.edu.uj.tp.nexo.issue.entity.Priority;
 import pl.edu.uj.tp.nexo.issue.service.IssueService;
-import pl.edu.uj.tp.nexo.security.SecurityConfig;
+import pl.edu.uj.tp.nexo.security.config.SecurityConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +41,7 @@ public class IssueControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void updateIssue_whenIssueExists_shouldReturnUpdatedIssue() throws Exception {
         long issueId = 1L;
         UpdateIssueRequest updateIssueRequest = UpdateIssueRequest.builder()
@@ -66,6 +68,7 @@ public class IssueControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void getIssues_whenNoOrganizationId_shouldReturnAllIssues() throws Exception {
         IssueResponse issueResponse = IssueResponse.builder().id(1L).title("Test Issue").build();
         List<IssueResponse> issueResponses = Collections.singletonList(issueResponse);
@@ -79,6 +82,7 @@ public class IssueControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void getIssues_whenOrganizationIdProvided_shouldReturnIssuesForOrganization() throws Exception {
         long organizationId = 1L;
         IssueResponse issueResponse = IssueResponse.builder().id(1L).title("Test Issue").organizationId(organizationId).build();

@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.edu.uj.tp.nexo.security.SecurityConfig;
+import pl.edu.uj.tp.nexo.security.config.SecurityConfig;
 import pl.edu.uj.tp.nexo.user.dto.UpdateUserRequest;
 import pl.edu.uj.tp.nexo.user.dto.UserResponse;
 import pl.edu.uj.tp.nexo.user.entity.Role;
@@ -39,6 +40,7 @@ public class UserControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void updateUser_whenUserExists_shouldReturnUpdatedUser() throws Exception {
         long userId = 1L;
         UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
@@ -67,6 +69,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void getUsers_whenNoOrganizationId_shouldReturnAllUsers() throws Exception {
         UserResponse userResponse = UserResponse.builder().id(1L).firstName("Jane").build();
         List<UserResponse> userResponses = Collections.singletonList(userResponse);
@@ -80,6 +83,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void getUsers_whenOrganizationIdProvided_shouldReturnUsersForOrganization() throws Exception {
         long organizationId = 1L;
         UserResponse userResponse = UserResponse.builder().id(1L).firstName("Jane").organizationId(organizationId).build();
