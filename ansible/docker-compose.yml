@@ -56,6 +56,6 @@ services:
       - frontend-network
     depends_on:
       - backend
-      - postgres
+    # but this env should be accesed during building proccess, it is just reminder to set it in GH SECRETS
     environment:
-      - VITE_API_URL=http://localhost:8080
+      - VITE_API_URL=http://localhost:8080/api
