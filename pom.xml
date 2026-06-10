@@ -112,6 +112,7 @@
 
 	<build>
 		<plugins>
+			<!--- TODO add test2 to the test sources! -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

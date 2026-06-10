@@ -1,0 +1,61 @@
+volumes:
+  postgres_data:
+
+networks:
+  backend-network:
+    driver: bridge
+  frontend-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexo-postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - backend-network
+    environment:
+      POSTGRES_DB: nexo_db
+      POSTGRES_USER: nexo_user
+      POSTGRES_PASSWORD: nexo_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexo_user -d nexo_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    container_name: nexo-backend
+    image: nexoregistryheczko.azurecr.io/backend-nexo:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+      - frontend-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nexo_db
+      - SPRING_DATASOURCE_USERNAME=nexo_user
+      - SPRING_DATASOURCE_PASSWORD=nexo_password
+      - MAIL_USERNAME=${MAIL_USERNAME:-}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-}
+
+  frontend:
+    container_name: nexo-frontend
+    image: nexoregistryheczko.azurecr.io/frontend-nexo:latest
+    ports:
+      - "5173:80"
+    networks:
+      - frontend-network
+    depends_on:
+      - backend
+      - postgres
+    environment:
+      - VITE_API_URL=http://localhost:8080
