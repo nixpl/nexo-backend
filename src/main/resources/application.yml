@@ -34,8 +34,7 @@ spring:
       ddl-auto: create # tables are recreated from scratch on every application startup. (Convenient for testing authentication)
 
 application:
-# TODO: Change the registration link to the correct frontend URL
-  frontend-inventation-url: http://localhost:8080
+  frontend-inventation-url: http://localhost:5173
   security:
     jwt:
     # really secret key :)))

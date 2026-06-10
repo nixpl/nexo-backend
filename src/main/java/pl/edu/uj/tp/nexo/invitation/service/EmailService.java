@@ -21,7 +21,7 @@ public class EmailService {
         message.setSubject("You are invited to join " + organizationName + " on Nexo!");
 
         message.setText("You have been invited to join the organization: " + organizationName + ".\n\n" +
-                "Click the following link to register: " + frontendUrl + "/register?token=" + token);
+                "Click the following link to register: " + frontendUrl + "/auth/register-invited?email=" + to + "&token=" + token);
 
         mailSender.send(message);
     }
